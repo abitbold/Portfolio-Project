@@ -116,7 +116,7 @@ def compute_returns(ts, log = False):
     else:
         return pd.Series((ts.iloc[1:,0].values/ts.iloc[:-1,0].values) - 1, index = idxs)
     
-def _benchmark(ts1, ts2, plot = False, sigmas = False, 
+def benchmark_help(ts1, ts2, plot = False, sigmas = False, 
     normalize = False, Fed = False):
     # only take in series
     # 11:07 PM
@@ -131,12 +131,12 @@ def _benchmark(ts1, ts2, plot = False, sigmas = False,
         ts2/=100.0
     if plot:
         plt.figure(figsize = (8,6))
-        plt.plot(xs, ts1, c = 'b', )
-        plt.plot(xs, ts2, c = 'r')
+        plt.plot(xs, ts1, c = 'b', label = ts1.name)
+        plt.plot(xs, ts2, c = 'r', label = ts2.name)
+        plt.show()
 
     x = ts1.astype('float64')
     y = ts2.astype('float64')
-    plt.show()
     if sigmas:
         return (x.corr(y), x.std()*np.sqrt(250),
             y.std()*np.sqrt(250))
