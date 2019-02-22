@@ -89,7 +89,7 @@ def __init__(self, tickers='', weight='', total = 1, name = 'default'):
                     raise Exception ('Please learn 1st grade math, weights should sum to 1')
           
                 
-    def delete_port(self):        
+   def delete_port(self):        
         try:
             os.remove('Saved/' + self.name + '.csv')
         except:
