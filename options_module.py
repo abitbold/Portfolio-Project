@@ -45,8 +45,12 @@ def black_scholes(S0,K,r,sigma,T,d,pc):
     d2=d1-sigma*np.sqrt(T)
     
     if pc=='Call':
+        if T == 0:
+            return np.maximum(S0-K, 0)
         return S0*np.exp(-1*d*T)*sp.stats.norm.cdf(d1)-K*np.exp(-1*r*T)*sp.stats.norm.cdf(d2)
     elif pc=='Put':
+        if T == 0:
+            return np.maximum(K-S0, 0)
         return -S0*np.exp(-1*d*T)*sp.stats.norm.cdf(-d1)+K*np.exp(-1*r*T)*sp.stats.norm.cdf(-d2)        
     else:
         print("Error: Please specify Call or Put")
@@ -143,14 +147,14 @@ def get_options_dfs(tcker_list):
         df['Today'] = pd.to_datetime(df['Today'])
         df['Time to Expiration'] = np.busday_count(df['Today'].values.astype('datetime64[D]'),df['Expiration'].values.astype('datetime64[D]'))
 
-        rate = get_rates(datetime.datetime.now() - datetime.timedelta(days = 7), 'today').loc[:-1,'10yr']
+        rate = get_rates(datetime.datetime.now() - datetime.timedelta(days = 7), 'today').iloc[-1,:]['10yr']
         
         
         
         df['PokeQuant Price'] = df.apply(lambda row: stochastic_vol_bs(row['Underlying Price'], 
                                                                        row['Strike'],
                                                                        rate,
-                                                                       get_dividend(df['Ticker']), #Pull dividend data, get_dividend()
+                                                                       get_dividend(row['Ticker']), #Pull dividend data, get_dividend()
                                                                        row['Implied Vol']**2, 
                                                                        row['Time to Expiration']/252,
                                                                        0.04, #calibrate Model
@@ -188,21 +192,12 @@ def get_options_dfs(tcker_list):
 # In[5]:
 
 
-import time
 
-start = time.time() #Measure time
-
-my_port=['AAPL','GOOG','AMZN','errr'] #4 minutes runtime
-#df,df_atm,df_straddle=get_options_dfs(my_port)
-
-#end = time.time() #Measure time
-#print(end - start)
 
 
 # In[6]:
 
 
-#df
 
 
 # # Functions to print information
@@ -220,7 +215,7 @@ def get_pq_recommendation(df,direction):
 
 #Prints best options to go long/short on
 def get_top3(df):
-    top3_bull=df.sort_values(by='PokeQuant Mispricing').head(3)
+    top3_bull=df.sort_values(by='PokeQuant Mispricing', ascending = False).head(3)
     top3_bear=df.sort_values(by='PokeQuant Mispricing').head(3)
     
     print("Top 3 bulls recommended by PokeQuant: \n",top3_bull)
@@ -232,7 +227,7 @@ def get_top3(df):
 # In[8]:
 
 
-#get_pq_recommendation(df,'Bullish')
+
 
 
 # # Visualization
@@ -320,10 +315,22 @@ def options_visualization_straddle_payoff(stock,expir):
 
 # In[13]:
 
-'''
-options_visualization_vol_skew(df_atm)
-options_visualization_mispricing_scat(df)
-options_visualization_mispricing_hist(df)
-options_visualization_straddle_payoff('GOOG','2019-02-22')
+if __name__ == '__main__':
+    import time
 
-'''
+    start = time.time() #Measure time
+
+    my_port=['PANW', 'GS'] #4 minutes runtime
+    df,df_atm,df_straddle=get_options_dfs(my_port)
+    df
+
+    end = time.time() #Measure time
+    print(end - start)
+    
+    get_pq_recommendation(df,'Bullish')
+    
+    options_visualization_vol_skew(df_atm)
+    options_visualization_mispricing_scat(df)
+    options_visualization_mispricing_hist(df)
+    options_visualization_straddle_payoff('GOOG','2019-02-22')
+
