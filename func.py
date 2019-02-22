@@ -81,17 +81,10 @@ def validate(date_text):
 
 def get_rates(start, end = 'today'):
     # 11:08 pm
-    now = pd.to_datetime(datetime.datetime.now())
-    temp_end = pd.to_datetime(end, format = '%Y-%m-%d')
-    
-    if end == 'today' or temp_end > now:
-        end = now
-    else:
-        end = temp_end
-    
-    endyear = end.year #int
-    start = pd.to_datetime(start)
-    startyear = start.year
+    start = check_date(start, string = False)
+    end = check_date(end, string = False)
+    endyear = end.year
+    staryear = start.year
     
     df_final = get_rates_yearly(startyear)
     
