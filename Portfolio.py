@@ -6,6 +6,7 @@ import datetime
 import pandas_datareader as web
 import matplotlib.pyplot as plt
 from func import *
+from yahoo import get_stats_data, get_financial_data
 
 class Portfolio :
     
