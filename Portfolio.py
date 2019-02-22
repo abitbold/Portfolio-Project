@@ -7,6 +7,7 @@ import pandas_datareader as web
 import matplotlib.pyplot as plt
 from func import *
 from yahoo import get_stats_data, get_financial_data
+import os
 
 class Portfolio :
     
@@ -65,12 +66,15 @@ class Portfolio :
        'Total Cash Flows From Financing Activities',
        'Effect Of Exchange Rate Changes', 'Change In Cash and Cash Equivalents'])
 
-    def __init__(self, tickers='', weight='', total = 1000000):
+    ids = 1
+    def __init__(self, tickers='', weight='', total = 1, name = 'default'):
         self._portfolio = pd.DataFrame(columns=['Name', 'Div', 'Mkt', 'Weight', 'Price', 'Last_update',\
                                                 'Forward_PE', 'Beta (3Y Monthly)', 'Dividend_yield',\
                                                 'Diluted EPS'])
         self.invest=total
-                
+        self.__id__ = Portfolio.ids
+        Portfolio.ids += 1
+        self.set_name(name)
         if len(tickers)>0:
             if type(tickers) is str:
                 self.add_stock(tickers, 1)
@@ -84,7 +88,18 @@ class Portfolio :
                 else:
                     raise Exception ('Please learn 1st grade math, weights should sum to 1')
                 
-
+    def delete_port(self):        
+        try:
+            os.remove('Saved/' + self.name + '.csv')
+        except:
+            pass
+        
+    def set_name(self, name):
+        if type(name)==str:
+            self.name=name
+        else:
+            raise Exception ('Input name as string!')
+            
     def add_stock(self, ticker, weight):
         if not ticker in Portfolio.comptick.index.values:
             raise Exception(str(ticker) + ' is not an available ticker')
@@ -188,17 +203,17 @@ class Portfolio :
         for stock in self._portfolio.index:
             self._portfolio.drop(stock, inplace=True)
 
-    def save_port(self, name):
+    def save_port(self):
         exists=False
         try:
-            pd.read_csv('Saved/' + str(name) + '.csv')
+            pd.read_csv('Saved/' + self.name + '.csv')
             exists = True
         except:
             pass
         if exists:
             a = ''
             while True:
-                print('Portfolio ' +  name + ' already exists. Save over ?\n1 = yes\n2 = no')
+                print('Portfolio ' +  self.name + ' already exists. Save over ?\n1 = yes\n2 = no')
                 a=input()
                 try: 
                     a = int(a)
@@ -209,11 +224,11 @@ class Portfolio :
                 else:
                     print('Incorrect')
             if a==1:
-                self._portfolio.to_csv('Saved/' + name + '.csv')
+                self._portfolio.to_csv('Saved/' + self.name + '.csv')
             else:
                 return
         else:
-            self._portfolio.to_csv('Saved/' + name + '.csv')
+            self._portfolio.to_csv('Saved/' + self.name + '.csv')
 
 
     def load_in(self, name):
@@ -226,6 +241,12 @@ class Portfolio :
             self._portfolio = pd.read_csv('Saved/' + str(name) + '.csv', index_col = 0)
         else:
             print('No portfolio named : ', name)
+
+    
+    def metrics_comp(self, b):
+        temp = pd.concat([a.ptf_summary(), b.ptf_summary()], axis=1).copy()
+        temp.columns = [self.name, b.name]
+        return temp
 
 
     def __str__(self):
@@ -256,7 +277,7 @@ class Portfolio :
         a.loc['Diluted EPS','Portfolio Metrics'] = (self._portfolio.Weight * self._portfolio.Diluted_EPS).sum()
         a.loc['Portfolio Sigma','Portfolio Metrics'] = self.get_sigma(first,last, annualized=True)
         a.loc['Portfolio Return','Portfolio Metrics'] = self.get_return(first,last, annualized=True)
-        print(a)
+        return a
         
     def create_filter_port(self, d, n):
         stats = pd.read_csv('Allticks/Allticks2_Stats.csv', index_col=0)
