@@ -241,6 +241,7 @@ class Portfolio :
             pass
         if exists:
             self._portfolio = pd.read_csv('Saved/' + str(name) + '.csv', index_col = 0)
+            self.name = name
         else:
             print('No portfolio named : ', name)
 
