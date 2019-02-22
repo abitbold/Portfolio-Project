@@ -1,14 +1,11 @@
-## Porfolio clas
+## Porfolio class
 
-from yahoo.py import get_stats_data, get_financial_data
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
 import datetime
 import pandas_datareader as web
-import traceback
-from func.py import *
+import matplotlib.pyplot as plt
+from func import *
 
 class Portfolio :
     
@@ -428,3 +425,7 @@ class Portfolio :
             return (np.corrcoef(rt1,rt2)[0,1], sigmay, sigmax)
         return np.corrcoef(rt1,rt2)[0,1] 
         
+
+if __name__ == '__main__':
+    a = Portfolio(['AAPL', 'MSFT', 'GE'])
+    print(a)
