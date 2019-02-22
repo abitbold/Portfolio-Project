@@ -445,7 +445,7 @@ class Portfolio :
         if type(x) is str: # x is a ticker for a stock/index
             return self.benchmark(start, end, x, plot, sigmas)
         else: # x is a time series
-            ts1 = self.pft_tms(start, end)
+            ts1 = self.ptf_tms(start, end)
             rt1 = compute_returns(ts1)
             rt2 = compute_returns(x)
             
@@ -458,8 +458,8 @@ class Portfolio :
         
     def plot_portfolios_ts(self, other_port, start = '2018-01-01', end = 'today'):
         # compares current portfolio ts with another portfolio's ts
-        ts1 = self.pft_tms(start, end)
-        ts2 = other_port.pft_tms(start, end)
+        ts1 = self.ptf_tms(start, end)
+        ts2 = other_port.ptf_tms(start, end)
         xs = list(ts1.index)
         ts1 = ts1*100/ts1[0]
         ts2 = ts2*100/ts2[0]
