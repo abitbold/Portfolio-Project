@@ -291,7 +291,140 @@ class Portfolio :
         print(stats.index)
         self.__init__(stats.index.values)
       
-      
+    def eff_frt(self, start = '2018-01-01', end = 'today', sims = 20000,
+            plot = False):
+        # plots the efficient frontier from the given portfolio of stocks
+        # returns all of the max SR weights, returns, vols in a dataframe
+        nstocks = len(self._portfolio.index)
+        start_s = check_date(start, 'Start', False)
+        end_s = check_date(end, 'End', False)
+        try:
+            rf = get_rates(start_s, end_s).loc[start_s,'10yr']
+        except KeyError:
+            try:
+                start_s = start_s + datetime.timedelta(days = 1)
+                rf = get_rates(start_s, end_s).loc[start_s, '10yr']
+            except KeyError:
+                start_s = start_s + datetime.timedelta(days = 1)
+                rf = get_rates(start_s, end_s).loc[start_s, '10yr']
+        rf /= 100.0
+        ts = self.get_timeseries(start, end, 'Adj Close', True)
+        ts = ts/ts.shift(1)
+        ann_returns = (np.prod(ts, axis = 0)**(250/ts.shape[0])) - 1
+        ts = ts.dropna(axis = 0)
+        stdev_ind = ts.std()*np.sqrt(250)
+        cov = (ts.cov()).values
+        ret_std = np.zeros((sims,2))
+        ws = []
+        for i in range(sims):
+            weights = np.random.random(nstocks)
+            weights /= sum(weights)
+            ws.append(weights)
+            ret_std[i,0] = weights.dot(ann_returns)
+            ret_std[i,1] = np.sqrt(weights.dot(cov.dot(weights)))*np.sqrt(250)
+        ws = np.array(ws)
+        min_std_index = list(np.where(ret_std[:,1] == ret_std[:,1].min())[0])[0]
+        min_ret = ret_std[min_std_index,0]
+        shrp_rats = (ret_std[:,0] - rf)/ret_std[:,1]
+        ival = (min_ret, min_ret + .001)
+        pfolio_idx = list(np.where(np.greater_equal(ret_std[:,0], ival[0]) & np.less(ret_std[:,0], ival[1]))[0])
+        max_SR_list = []
+        idxs = []
+        while pfolio_idx:
+            max_SR = np.amax(shrp_rats[pfolio_idx])
+            max_SR_idx = list(np.where(shrp_rats == max_SR)[0])[0]
+            max_SR_list.append((max_SR, max_SR_idx))
+            idxs.append(max_SR_idx)
+            ival = (ival[0] + .001, ival[1] + .001)
+            pfolio_idx = list(np.where(np.greater_equal(ret_std[:,0], ival[0]) & np.less(ret_std[:,0], ival[1]))[0])
+        if plot:
+            plt.figure(num = None, figsize = (8,6), dpi = 80, facecolor = 'w', edgecolor = 'k')
+            plt.scatter(stdev_ind, ann_returns, c = 'g', s = 15, label = list(self._portfolio.index))
+            plt.scatter(ret_std[:,1], ret_std[:,0], c = 'b', s = 1, label = 'Hypothetical Portfolios')
+            plt.scatter(ret_std[idxs,1], ret_std[idxs,0], c = 'r', s = 5, label = 'Maximum Sharpe Ratios')
+            plt.ylabel("Absolute Returns")
+            plt.xlabel("Standard Deviation")
+            plt.legend()
+            plt.show()
+
+        opt_ws = ws[idxs]
+        opt_rets = ret_std[idxs,0]
+        opt_std = ret_std[idxs,1]
+        opt_SR = shrp_rats[idxs]
+        col_names = list(self._portfolio.index) + ['returns'] + ['stdev'] + ['Sharpe']
+        df = pd.DataFrame(columns = col_names)
+        for idx, val in enumerate(opt_ws):
+            row = list(val) + [opt_rets[idx]] + [opt_std[idx]] + [opt_SR[idx]]
+            row_d = dict(zip(col_names,row))
+            df_temp = pd.DataFrame(row_d, index = [0])
+            df = pd.concat([df, df_temp], ignore_index = True)
+        return df
+
+    def benchmark(self,start, end, index = None, plot = False, sigmas = False,
+                  normalize = False, rate = '10yr', log = False):
+        # returns correlation between portfolio and index if specified
+        # else returns correlation between
+        # 11:06 PM
+        port_vals = self.ptf_tms(start,end)
+        port_rets = compute_returns(port_vals, log)
+        if index:
+            try:
+                print("Trying to get time series for index.")
+                i_ts = self.get_timeseries(start,end,'Adj Close', False, [index])
+            except:
+                print("Failed to get time series for index.")
+                raise Exception("Not a valid index/ticker")
+            print("Computing returns for the index")
+            idx_rets = compute_returns(i_ts,log)
+            return _benchmark(port_rets, idx_rets, plot, sigmas,normalize)
+        else:
+            try:
+                print("Getting rates from the Fed")
+                rates = get_rates(start,end).loc[:,rate]
+            except:
+                print("Failed to get rates from the Fed")
+                raise Exception ("Not a valid interest rate")
+            return _benchmark(port_rets, rates, plot, sigmas, normalize, True)    
     
+    def sharpe_ratio_ptf(self, first='today', last='today', rebalancing = True):
+        from scipy.stats.mstats import gmean
+        first = check_date(first,'first')
+        last = check_date(last,'last')
+        ptf = self.ptf_tms(first,last, rebalancing)
+        rp = gmean(np.compute_returns(ptf)+1)-1
+        rf = get_rates(first,last).loc[first,'10yr']
+        sig = ptf.std()*np.sqrt(250)
+        return (rp - rf)/sig
+
+    def sharpe_ratio_stk(self, first='today', last='today'):
+        from scipy.stats.mstats import gmean
+        first = check_date(first,'first')
+        last = check_date(last,'last')
+
+        stk = self.get_timeseries(first,last)
+        rp = gmean(np.compute_returns(stk)+1)-1
+        rf = get_rates(first,last).loc[first,'10yr']
+        sig = stk.std()*np.sqrt(250)
+
+        return (rp - rf)/sig
+    
+    def compute_corr(self, x, start = '2018-01-01', end = 'today',
+                     sigmas = False, plot = False):
+        # returns correlation between portfolio and index/time series
+        # optionally returns annualized volatility
+        # optionally plots the two time series of returns
         
+        if type(x) is str: # x is a ticker for a stock/index
+            return self.benchmark(start, end, x, plot, sigmas)
+        else: # x is a time series
+            ts1 = self.pft_tms(start, end)
+            rt1 = compute_returns(ts1)
+            rt2 = compute_returns(x)
+            
+        sigmax = np.std(rt2)*np.sqrt(250)
+        sigmay = np.std(rt1)*np.sqrt(250)
+        
+        if sigmas:
+            return (np.corrcoef(rt1,rt2)[0,1], sigmay, sigmax)
+        return np.corrcoef(rt1,rt2)[0,1] 
         
