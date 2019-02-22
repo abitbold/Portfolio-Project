@@ -359,12 +359,15 @@ class Portfolio :
         return df
 
     def benchmark(self,start, end, index = None, plot = False, sigmas = False,
-                  normalize = False, rate = '10yr', log = False):
+                  normalize = False, rate = '10yr', log = False, returns = False):
         # returns correlation between portfolio and index if specified
         # else returns correlation between
-        # 11:06 PM
+        # 12:13 AM
         port_vals = self.ptf_tms(start,end)
-        port_rets = compute_returns(port_vals, log)
+        toplot = port_vals/port_vals.iloc[0]
+        if returns:
+            toplot = compute_returns(port_vals, log)
+            
         if index:
             try:
                 print("Trying to get time series for index.")
@@ -373,8 +376,10 @@ class Portfolio :
                 print("Failed to get time series for index.")
                 raise Exception("Not a valid index/ticker")
             print("Computing returns for the index")
-            idx_rets = compute_returns(i_ts,log)
-            return _benchmark(port_rets, idx_rets, plot, sigmas,normalize)
+            indextoplot = i_ts/i_ts[0]
+            if returns:
+                indextoplot = compute_returns(i_ts,log)
+            return _benchmark(toplot, indextoplot, plot, sigmas,normalize)
         else:
             try:
                 print("Getting rates from the Fed")
@@ -382,7 +387,8 @@ class Portfolio :
             except:
                 print("Failed to get rates from the Fed")
                 raise Exception ("Not a valid interest rate")
-            return _benchmark(port_rets, rates, plot, sigmas, normalize, True)    
+            port_rets = compute_returns(port_vals)
+            return _benchmark(port_rets, rates, plot, sigmas, normalize, True)  
     
     def sharpe_ratio_ptf(self, first='today', last='today', rebalancing = True):
         from scipy.stats.mstats import gmean
