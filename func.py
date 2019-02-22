@@ -1,4 +1,10 @@
 # Functions used with the portfolio class
+import pandas as pd
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import datetime
+import numpy as np
+import matplotlib.pyplot as plt
 
 def check_date(dt='today', name='Date', string=True, fmt = '%Y-%m-%d'):
     #Check if date are pandas compatible dates
