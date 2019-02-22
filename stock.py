@@ -2,8 +2,8 @@ from Portfolio import Portfolio
 import pandas as pd
 
 def stock_universe():
-        stats = pd.read_csv('comptick.csv')
-        return (stats)
+    stats = pd.read_csv('comptick.csv')
+    return (stats)
 
 def stock_timeseries(ticker, first = 'last_week', last = 'today'):
     p = Portfolio(ticker)
