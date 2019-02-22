@@ -1,5 +1,15 @@
 ## Porfolio clas
 
+from yahoo.py import get_stats_data, get_financial_data
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import pandas as pd
+import numpy as np
+import datetime
+import pandas_datareader as web
+import traceback
+from func.py import *
+
 class Portfolio :
     
     comptick = pd.read_csv('comptick.csv', index_col=0)
