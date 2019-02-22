@@ -2,9 +2,6 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
-import datetime
-import pandas_datareader as web
-import traceback
 
 
 def get_financial_data(stock):
@@ -63,7 +60,6 @@ def get_stats_data(stock):
     html = urlopen('https://finance.yahoo.com/quote/'+stock+'/key-statistics?p='+stock)
     bsyc = BeautifulSoup(html.read(), "lxml")
     tables = bsyc.findAll('table')
-    T=[]
     stats = []
     names = []
     for table in tables:
