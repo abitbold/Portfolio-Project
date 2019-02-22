@@ -263,7 +263,7 @@ class Portfolio :
         else:
             return False
 
-    def get_beta(self,first='last week', last='today', index = '^GSPC'):
+    def get_beta(self,first='last_week', last='today', index = '^GSPC'):
         corr_port, sigma_port, sigma_index = self.compute_corr(index, first, last, sigmas = True)
         beta_port = corr_port*sigma_port/sigma_index
         return (beta_port)
@@ -395,7 +395,7 @@ class Portfolio :
         if index:
             try:
                 print("Trying to get time series for index.")
-                i_ts = self.get_timeseries(start,end,'Adj Close', False, [index])
+                i_ts = self.get_timeseries(start,end,'Adj Close', False, [index]).loc[:,index]
             except:
                 print("Failed to get time series for index.")
                 raise Exception("Not a valid index/ticker")
