@@ -233,6 +233,7 @@ class Portfolio :
 
 
     def load_in(self, name):
+        exists = False
         try:
             pd.read_csv('Saved/' + str(name) + '.csv')
             exists = True
