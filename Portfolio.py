@@ -67,7 +67,7 @@ class Portfolio :
        'Effect Of Exchange Rate Changes', 'Change In Cash and Cash Equivalents'])
 
     ids = 1
-def __init__(self, tickers='', weight='', total = 1, name = 'default'):
+    def __init__(self, tickers='', weight='', total = 1, name = 'default'):
         self._portfolio = pd.DataFrame(columns=['Name', 'Div', 'Mkt', 'Weight', 'Price', 'Last_update',\
                                                 'Forward_PE', 'Beta', 'Dividend_yield',\
                                                 'Diluted_EPS'])
@@ -89,7 +89,7 @@ def __init__(self, tickers='', weight='', total = 1, name = 'default'):
                     raise Exception ('Please learn 1st grade math, weights should sum to 1')
           
                 
-   def delete_port(self):        
+    def delete_port(self):        
         try:
             os.remove('Saved/' + self.name + '.csv')
         except:
