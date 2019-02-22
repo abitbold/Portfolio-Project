@@ -364,9 +364,9 @@ class Portfolio :
                   normalize = False, rate = '10yr', log = False, returns = False):
         # returns correlation between portfolio and index if specified
         # else returns correlation between
-        # 12:13 AM
+        # 11:06 PM
         port_vals = self.ptf_tms(start,end)
-        toplot = port_vals/port_vals.iloc[0]
+        toplot = 100*port_vals/port_vals[0]
         if returns:
             toplot = compute_returns(port_vals, log)
             
@@ -378,10 +378,10 @@ class Portfolio :
                 print("Failed to get time series for index.")
                 raise Exception("Not a valid index/ticker")
             print("Computing returns for the index")
-            indextoplot = i_ts/i_ts[0]
+            indextoplot = 100*i_ts/i_ts[0]
             if returns:
                 indextoplot = compute_returns(i_ts,log)
-            return benchmark_help(toplot, indextoplot, plot, sigmas,normalize)
+            return _benchmark(toplot, indextoplot, plot, sigmas,normalize)
         else:
             try:
                 print("Getting rates from the Fed")
@@ -390,7 +390,7 @@ class Portfolio :
                 print("Failed to get rates from the Fed")
                 raise Exception ("Not a valid interest rate")
             port_rets = compute_returns(port_vals)
-            return benchmark_help(port_rets, rates, plot, sigmas, normalize, True)  
+            return _benchmark(port_rets, rates, plot, sigmas, normalize, True) 
     
     def sharpe_ratio_ptf(self, first='today', last='today', rebalancing = True):
         from scipy.stats.mstats import gmean
@@ -432,9 +432,23 @@ class Portfolio :
         
         if sigmas:
             return (np.corrcoef(rt1,rt2)[0,1], sigmay, sigmax)
-        return np.corrcoef(rt1,rt2)[0,1] 
+        return np.corrcoef(rt1,rt2)[0,1]
         
+    def plot_portfolios_ts(self, other_port, start = '2018-01-01', end = 'today'):
+        # compares current portfolio ts with another portfolio's ts
+        ts1 = self.pft_tms(start, end)
+        ts2 = other_port.pft_tms(start, end)
+        xs = list(ts1.index)
+        ts1 = ts1*100/ts1[0]
+        ts2 = ts2*100/ts2[0]
+        plt.plot(xs, ts1, c = 'b', label = ts1.name)
+        plt.plot(xs, ts2, c = 'r', label = ts2.name)
+        plt.legend()
+        plt.show()
+        return np.corrcoef(ts1, ts2)[0,1]
+    
 
+    
 if __name__ == '__main__':
     a = Portfolio(['AAPL', 'MSFT', 'GE'])
     print(a)
