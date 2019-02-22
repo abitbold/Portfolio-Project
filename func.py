@@ -5,6 +5,14 @@ from bs4 import BeautifulSoup
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
+from yahoo import *
+
+def get_dividend(ticker):
+    df = get_stats_data(ticker)
+    div = df['Forward Annual Dividend Yield'].values[0]
+    if div is np.nan:
+        return 0
+    return div
 
 def check_date(dt='today', name='Date', string=True, fmt = '%Y-%m-%d'):
     #Check if date are pandas compatible dates
