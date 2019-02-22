@@ -242,8 +242,10 @@ class Portfolio :
         if exists:
             self._portfolio = pd.read_csv('Saved/' + str(name) + '.csv', index_col = 0)
             self.name = name
+            return 1
         else:
             print('No portfolio named : ', name)
+            return 0
 
     
     def metrics_comp(self, b):
