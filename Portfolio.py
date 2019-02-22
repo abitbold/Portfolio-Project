@@ -204,6 +204,7 @@ class Portfolio :
         for stock in self._portfolio.index:
             self._portfolio.drop(stock, inplace=True)
 
+           
     def save_port(self):
         exists=False
         try:
@@ -226,14 +227,16 @@ class Portfolio :
                     print('Incorrect')
             if a==1:
                 self._portfolio.to_csv('Saved/' + self.name + '.csv')
+                Portfolio.base_stats.loc[self._portfolio.index.values, :].to_csv('Saved/base_' + self.name + '.csv')
             else:
                 return
         else:
             self._portfolio.to_csv('Saved/' + self.name + '.csv')
+            Portfolio.base_stats.loc[self._portfolio.index.values, :].to_csv('Saved/base_' + self.name + '.csv')
 
 
     def load_in(self, name):
-        exists = False
+        exists=False
         try:
             pd.read_csv('Saved/' + str(name) + '.csv')
             exists = True
@@ -241,7 +244,10 @@ class Portfolio :
             pass
         if exists:
             self._portfolio = pd.read_csv('Saved/' + str(name) + '.csv', index_col = 0)
-            self.name = name
+            self.name=name
+            temp = pd.read_csv('Saved/base_' + self.name + '.csv', index_col=0)
+            for stock in self._portfolio.index.values:
+                Portfolio.base_stats.loc[stock,:] = temp.loc[stock,:]
             return 1
         else:
             print('No portfolio named : ', name)
@@ -249,7 +255,7 @@ class Portfolio :
 
     
     def metrics_comp(self, b):
-        temp = pd.concat([a.ptf_summary(), b.ptf_summary()], axis=1).copy()
+        temp = pd.concat([self.ptf_summary(), b.ptf_summary()], axis=1).copy()
         temp.columns = [self.name, b.name]
         return temp
 
