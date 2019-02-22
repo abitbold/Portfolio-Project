@@ -124,7 +124,6 @@ def benchmark_help(ts1, ts2, plot = False, sigmas = False,
         ts1 = (ts1-ts1.mean())/ts1.std()
         if not Fed:
             ts2 = (ts2-ts2.mean())/ts2.std()
-    print("Attempting to plot the time series together.")
     n = len(ts1)
     xs = np.linspace(0,1,n)
     if Fed: # want the percentages as a decimal
