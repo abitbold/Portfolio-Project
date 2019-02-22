@@ -258,7 +258,7 @@ class Portfolio :
         a.loc['Portfolio Return','Portfolio Metrics'] = self.get_return(first,last, annualized=True)
         print(a)
         
-    def create_filter_port(self, d):
+    def create_filter_port(self, d, n):
         stats = pd.read_csv('Allticks/Allticks2_Stats.csv', index_col=0)
         #stats.replace('NA', np.nan, inplace=True)
         col = {'Forward P/E': [0,0],
@@ -283,11 +283,13 @@ class Portfolio :
             if d[k][0]>d[k][1] :
                 raise Exception(str(k) + ' end is smaller than begining')
             col[k][0]=d[k][0]
-            if d[k][1] == 0 : col[k][1] = 1000000000000000000
+            if d[k][1] == 0 : col[k][1] = 10000000000000000000
             else: col[k][1]=d[k][1]
             stats = stats.loc[((stats[k]>col[k][0]) & (stats[k]<col[k][1])), :] 
-        print(stats.index)
-        self.__init__(stats.index.values)
+        if len(stats.index)>0:
+            if len(stats.index)>n:
+                stats = stats.iloc[np.floor(np.random.uniform(size=n)*n).astype('int'), :]   
+            self.__init__(stats.index.values.tolist())
       
     def eff_frt(self, start = '2018-01-01', end = 'today', sims = 20000,
             plot = False):
