@@ -132,6 +132,7 @@ def benchmark_help(ts1, ts2, plot = False, sigmas = False,
         plt.figure(figsize = (8,6))
         plt.plot(xs, ts1, c = 'b', label = ts1.name)
         plt.plot(xs, ts2, c = 'r', label = ts2.name)
+        plt.legend()
         plt.show()
 
     x = ts1.astype('float64')
