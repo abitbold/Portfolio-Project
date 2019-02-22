@@ -387,7 +387,7 @@ class Portfolio :
         # else returns correlation between
         # 11:06 PM
         port_vals = self.ptf_tms(start,end)
-        toplot = 100*port_vals/port_vals[0]
+        toplot = 100*port_vals/port_vals.iloc[0]
         if returns:
             toplot = compute_returns(port_vals, log)
             
@@ -399,7 +399,7 @@ class Portfolio :
                 print("Failed to get time series for index.")
                 raise Exception("Not a valid index/ticker")
             print("Computing returns for the index")
-            indextoplot = 100*i_ts/i_ts[0]
+            indextoplot = 100*i_ts/i_ts.iloc[0]
             if returns:
                 indextoplot = compute_returns(i_ts,log)
             return _benchmark(toplot, indextoplot, plot, sigmas,normalize)
@@ -411,7 +411,7 @@ class Portfolio :
                 print("Failed to get rates from the Fed")
                 raise Exception ("Not a valid interest rate")
             port_rets = compute_returns(port_vals)
-            return _benchmark(port_rets, rates, plot, sigmas, normalize, True) 
+            return _benchmark(port_rets, rates, plot, sigmas, normalize, True)
     
     def sharpe_ratio_ptf(self, first='today', last='today', rebalancing = True):
         from scipy.stats.mstats import gmean
