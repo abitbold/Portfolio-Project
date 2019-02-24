@@ -77,13 +77,16 @@ class Portfolio :
         self.set_name(name)
         if len(tickers)>0:
             if type(tickers) is str:
+                print('adding stock', tickers, 'to the portfolio : ...\n')
                 self.add_stock(tickers, 1)
             else:
                 if ((weight=='') or (np.sum(weight)<=10)):
                     for ind, tick in enumerate(tickers):
                         if weight != '':
+                            print('adding stock', ind+1, '/', len(tickers), ':',  tick, 'to the portfolio : ...\n')
                             self.add_stock(tick, weight[ind])
                         else:
+                            print('adding stock', ind+1, '/', len(tickers), ':',  tick, 'to the portfolio : ...\n')
                             self.add_stock(tick, 1/len(tickers))
                 else:
                     raise Exception ('Please learn 1st grade math, weights should sum to 1')
@@ -109,8 +112,14 @@ class Portfolio :
             if pd.isna(Portfolio.base_stats.loc[ticker,'Forward Annual Dividend Yield']): Portfolio.base_stats.loc[ticker,'Forward Annual Dividend Yield'] = 0 
         self._portfolio.loc[ticker, ['Div', 'Mkt']] = Portfolio.base_stats.loc[ticker, ['Forward Annual Dividend Yield',\
                                                                            'Market Cap (intraday)']].values
-        
-        self._portfolio.loc[ticker, 'Price'] = web.get_data_yahoo(ticker, start=check_date('last_week'), end=check_date())['Adj Close'][-1] 
+        for i in range(5):
+            try:
+                self._portfolio.loc[ticker, 'Price'] = web.get_data_yahoo(ticker, start=check_date('last_week'), end=check_date())['Adj Close'][-1] 
+                break
+            except:
+                time.sleep(2)
+                i+=1
+                
         self._portfolio.loc[ticker, 'Last_update'] = check_date(fmt='%Y-%m-%d %H:%M')
         self._portfolio.loc[ticker, 'Weight'] = weight
         self._portfolio.loc[ticker, 'Name'] = Portfolio.comptick.loc[ticker, 'Company_name']
@@ -118,6 +127,7 @@ class Portfolio :
         self._portfolio.loc[ticker,'Dividend_yield'] = Portfolio.base_stats.loc[ticker,'Forward Annual Dividend Yield']
         self._portfolio.loc[ticker,'Diluted_EPS'] = Portfolio.base_stats.loc[ticker,'Diluted EPS']
         self._portfolio.loc[ticker,'Forward_PE'] = Portfolio.base_stats.loc[ticker,'Forward P/E']
+        
         
         
     def remove_stock(self, ticker):
@@ -141,9 +151,9 @@ class Portfolio :
             first = check_date(first, string=False)
             last = check_date(last, string=False)
             if annualized:
-                return (tms[-1]/tms[0])**(250/(last-first).days)-1
+                return self._portfolio.Weight.sum()*((tms[-1]/tms[0])**(250/len(tms.index.values.tolist()))-1)
             else:
-                return (tms[-1]/tms[0]-1)
+                return self._portfolio.Weight.sum()*(tms[-1]/tms[0]-1)
         else:
             return None
             
@@ -189,15 +199,22 @@ class Portfolio :
         ## to get the most current price
         first = check_date(first, 'first')
         last= check_date(last, 'last')
-        if extra_tick=='':
-            return web.get_data_yahoo(self._portfolio.index, start=first, end=last)[spec]
-        else:
-            if not type(extra_tick) == list:
-                raise Exception('The extra tickers ust be given in a list of string')
-            if tick:
-                return web.get_data_yahoo(self._portfolio.index.values.tolist()+extra_tick, start=first, end=last)[spec]
-            else:
-                return web.get_data_yahoo(extra_tick, start=first, end=last)[spec] 
+        for i in range(5):
+            try:
+                if extra_tick=='':
+                    return web.get_data_yahoo(self._portfolio.index.values.tolist(), start=first, end=last)[spec]
+                else:
+                    if not type(extra_tick) == list:
+                        raise Exception('The extra tickers ust be given in a list of string')
+                    if tick:
+                        return web.get_data_yahoo(self._portfolio.index.values.tolist()+extra_tick, start=first, end=last)[spec]
+                    else:
+                        return web.get_data_yahoo(extra_tick, start=first, end=last)[spec] 
+                    break
+            except:
+                time.sleep(2)
+                pass
+            i+=1
                 
     
     def empty_port(self):
@@ -254,8 +271,10 @@ class Portfolio :
             return 0
 
     
-    def metrics_comp(self, b):
-        temp = pd.concat([self.ptf_summary(), b.ptf_summary()], axis=1).copy()
+    def metrics_comp(self, b, first='last_week', last='today'):
+        first = check_date(first)
+        last = check_date(last)
+        temp = pd.concat([self.ptf_summary(first, last), b.ptf_summary(first, last)], axis=1).copy()
         temp.columns = [self.name, b.name]
         return temp
 
@@ -320,7 +339,7 @@ class Portfolio :
             stats = stats.loc[((stats[k]>col[k][0]) & (stats[k]<col[k][1])), :] 
         if len(stats.index)>0:
             if len(stats.index)>n:
-                stats = stats.iloc[np.floor(np.random.uniform(size=n)*n).astype('int'), :]   
+                stats = stats.iloc[np.random.choice(np.linspace(0,len(stats.index)-1, len(stats.index)),size=n, replace=False ).astype('int'), :]   
             self.__init__(stats.index.values.tolist())
       
     def eff_frt(self, start = '2018-01-01', end = 'today', sims = 20000,
