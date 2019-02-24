@@ -127,12 +127,13 @@ def benchmark_help(ts1, ts2, plot = False, sigmas = False,
             ts2 = (ts2-ts2.mean())/ts2.std()
     n = len(ts1)
     xs = np.linspace(0,1,n)
+    xs2 = np.linspace(0,1,len(ts2)) # I added this here because an error I received as the 2 ts did not have the same length, trading days are not the same. It seems to fix the issue as I use xs2 to plot ts2 now. Feel free to handle differently. 
     if Fed: # want the percentages as a decimal
         ts2/=100.0
     if plot:
         plt.figure(figsize = (8,6))
         plt.plot(xs, ts1, c = 'b', label = ts1.name)
-        plt.plot(xs, ts2, c = 'r', label = ts2.name)
+        plt.plot(xs2, ts2, c = 'r', label = ts2.name)
         plt.legend()
         plt.show()
 
