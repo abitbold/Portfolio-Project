@@ -92,7 +92,7 @@ def get_rates(start, end = 'today'):
     start = check_date(start, string = False)
     end = check_date(end, string = False)
     endyear = end.year
-    staryear = start.year
+    startyear = start.year
     
     df_final = get_rates_yearly(startyear)
     
