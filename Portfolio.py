@@ -312,9 +312,9 @@ class Portfolio :
                 d[k][1] = float(d[k][1])
             except: 
                 raise Exception(str(k) + ' should be a float for both end of the interval. Current value is : ',+ str(k))
-            if d[k][0]>d[k][1] :
-                raise Exception(str(k) + ' end is smaller than begining')
             col[k][0]=d[k][0]
+            if d[k][0]>d[k][1] and d[k][1]>0 :
+                raise Exception(str(k) + ' end is smaller than begining')
             if d[k][1] == 0 : col[k][1] = 10000000000000000000
             else: col[k][1]=d[k][1]
             stats = stats.loc[((stats[k]>col[k][0]) & (stats[k]<col[k][1])), :] 
