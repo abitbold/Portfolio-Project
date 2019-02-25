@@ -467,7 +467,9 @@ class Portfolio :
 
             rets[rate] = rates
             rets['Normalized Values'] = norm_vals
-            rets.plot(figsize = (10,10))
+            if plot:
+                rets.plot(figsize = (10,10))
+                plt.show()
             rets = rets.dropna(0)
             
             x = rets[port_rets.name].values.astype(np.float64)
