@@ -655,7 +655,7 @@ def port_comp_menu():
         print('Press enter to automatically compare your portfolio against the SP500')
         tick = input('Enter ticker ...\n').strip()
         if tick == '':
-            selected_port[0].benchmark(dt[0], dt[1], plot= True, sigmas=True)
+            selected_port[0].benchmark(dt[0], dt[1], index='^GSPC', plot= True, sigmas=True)
             pause()
             return 0
         else:
