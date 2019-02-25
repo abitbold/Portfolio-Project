@@ -199,7 +199,6 @@ class Portfolio :
             initial_weights = pd.DataFrame([self._portfolio.loc[:, 'Weight'].transpose().values.tolist()]*len(p1.index)).reset_index(drop=True)
             p.iloc[1:,:] = (p1 / p2).values*initial_weights.values-initial_weights.values
             p.iloc[0,:] = self._portfolio.Weight.values
-            print(p)
             p = np.cumsum(p, axis=0)
             return pd.Series(p.sum(axis=1), name = self.name)
         else:
