@@ -14,6 +14,10 @@ import warnings
 import time
 import stock_menus
 
+port_dict = dict()
+selected_port = ['']
+main_tick = pd.read_csv('comptick.csv', index_col=0)
+
 def print_menu_name(name):
     d = ''
     for i in range(len(name)+10):
@@ -1148,10 +1152,6 @@ def main():
                 
     print_menu_name('Program successfully closed')
    
-port_dict = dict()
-selected_port = ['']
-main_tick = pd.read_csv('comptick.csv', index_col=0)
-
 if __name__ == '__main__':
 
     warnings.filterwarnings("ignore")
