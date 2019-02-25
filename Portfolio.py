@@ -205,6 +205,7 @@ class Portfolio :
         else:
             prices = self.get_timeseries(first, last)
             initial_weights = self._portfolio.loc[:, 'Weight']
+            prices.iloc[0,:] = initial_weights.values
             prices.iloc[1:,:] = (prices.iloc[1:,:].values / prices.iloc[0,:].values)*initial_weights.values
             return prices.sum(axis=1) 
         
