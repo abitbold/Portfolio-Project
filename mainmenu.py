@@ -12,6 +12,7 @@ from func import check_date
 import matplotlib.pyplot as plt
 import warnings
 import time
+import stock_menus
 
 def print_menu_name(name):
     d = ''
@@ -964,7 +965,7 @@ def main():
         
         if current == 'main_menu()':
             if response == 1:
-                pass
+                current = 'stock_menus.stock_menu()'
             elif response == 2:
                 current = 'load_portfolio_menu()'
             elif response == 3:
@@ -979,7 +980,9 @@ def main():
                 current = 'select_portfolio_menu()'
             elif response == 0:
                 break
-        
+        elif current == 'stock_menus.stock_menu()':
+            current = 'main_menu()'
+            
         elif current == 'load_portfolio_menu()':
             if response == 1: current = 'main_menu()'
             elif response == 2 : current = 'load_portfolio_menu()'
@@ -1144,13 +1147,14 @@ def main():
 
                 
     print_menu_name('Program successfully closed')
-        
+   
+port_dict = dict()
+selected_port = ['']
+main_tick = pd.read_csv('comptick.csv', index_col=0)
+
 if __name__ == '__main__':
 
     warnings.filterwarnings("ignore")
-    port_dict = dict()
-    selected_port = ['']
-    main_tick = pd.read_csv('comptick.csv', index_col=0)
     main()
     
 
