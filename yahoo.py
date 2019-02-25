@@ -39,7 +39,7 @@ def get_financial_data(stock):
                                         rowTemp = data2
                                         j+=1
                                     else:
-                                        temp.append(int(data2.replace(',', ''))*1000)
+                                        temp.append(float(data2.replace(',', ''))*1000)
                 i+=1
                 if len(temp)>1:
                     T.append(temp)
