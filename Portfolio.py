@@ -527,14 +527,16 @@ class Portfolio :
         # compares current portfolio ts with another portfolio's ts
         ts1 = self.ptf_tms(start, end)
         ts2 = other_port.ptf_tms(start, end)
-        xs = list(ts1.index)
         ts1 = ts1*100/ts1[0]
         ts2 = ts2*100/ts2[0]
-        plt.plot(xs, ts1, c = 'b', label = ts1.name)
-        plt.plot(xs, ts2, c = 'r', label = ts2.name)
-        plt.legend()
-        plt.show()
-        return np.corrcoef(ts1, ts2)[0,1]
+        df = pd.DataFrame(ts1, columns = [ts1.name])
+        ts2 = ts2.loc[ts1.index]
+        df[ts2.name] = ts2
+        
+        df.plot(figsize = (8,6))
+
+        corr = df.astype(np.float64).corr().loc[str(ts1.name), str(ts2.name)]
+        return corr
     
 
     
