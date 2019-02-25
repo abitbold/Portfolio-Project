@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from func import *
 from yahoo import get_stats_data, get_financial_data
 import os
+import time
 
 class Portfolio :
     
