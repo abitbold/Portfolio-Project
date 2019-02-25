@@ -781,6 +781,7 @@ def port_comp_port_menu():
             while i<4:
                 try:
                     selected_port[0].plot_portfolios_ts(p2, dt[0], dt[1])
+                    plt.show()
                     break
                 except:
                     i+=1
