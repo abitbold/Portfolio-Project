@@ -319,13 +319,13 @@ class Portfolio :
     def ptf_summary(self, first='last_week', last='today'):
         a = pd.DataFrame()#np.zeros(7,1), index = ['Portfolio Value', 'Forward P/E', 'Portfolio Beta',\
                          #'Dividend Yield', 'Diluted EPS', 'Portfolio Sigma', 'Portfolio Return'], columns = ['Portfolio Metrics'])
-        a.loc['Portfolio Value','Portfolio Metrics'] = (1+self.get_return(first, last))*self.invest
+        a.loc['Portfolio Value','Portfolio Metrics'] = (1+self.get_return(first, last, annualized=False))
         a.loc['Forward P/E','Portfolio Metrics'] = (self._portfolio.Weight.values * self._portfolio.Forward_PE).sum()
         a.loc['Portfolio Beta','Portfolio Metrics'] = self.get_beta(first,last)
         a.loc['Dividend Yield','Portfolio Metrics'] = (self._portfolio.Weight * self._portfolio.Dividend_yield).sum()
         a.loc['Diluted EPS','Portfolio Metrics'] = (self._portfolio.Weight * self._portfolio.Diluted_EPS).sum()
-        a.loc['Portfolio Sigma','Portfolio Metrics'] = self.get_sigma(first,last, annualized=True)
-        a.loc['Portfolio Return','Portfolio Metrics'] = self.get_return(first,last, annualized=True)
+        a.loc['Annualized portfolio Sigma','Portfolio Metrics'] = self.get_sigma(first,last, annualized=True)
+        a.loc['Annualized portfolio Return','Portfolio Metrics'] = self.get_return(first,last, annualized=True)
         return a
         
     def create_filter_port(self, d, n):
