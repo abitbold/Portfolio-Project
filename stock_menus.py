@@ -231,8 +231,8 @@ def stock_comparisons(stock_list = None):
     cs()
     print("You've chosen " + t1 + " and " + t2)
     
-    p1 = Portfolio(t1)
-    p2 = Portfolio(t2)
+    p1 = Portfolio(t1, name = t1)
+    p2 = Portfolio(t2, name = t2)
     d1 = '2018-01-01'
     d2 = '2019-01-01'
     print('''Default date range:\n
