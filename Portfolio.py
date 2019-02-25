@@ -458,9 +458,28 @@ class Portfolio :
                 rates = get_rates(start,end).loc[:,rate]
             except:
                 print("Failed to get rates from the Fed")
-                raise Exception ("Not a valid interest rate")
+                raise Exception ("Error getting the rates")
             port_rets = compute_returns(port_vals)
-            return benchmark_help(port_rets, rates, plot, sigmas, normalize, True)
+            rates /= 100.0
+            norm_vals = (port_vals/port_vals.values[0])-1
+            norm_vals = norm_vals.loc[port_rets.index]
+            rets = pd.DataFrame(port_rets)
+
+            rets[rate] = rates
+            rets['Normalized Values'] = norm_vals
+            rets.plot(figsize = (10,10))
+            rets = rets.dropna(0)
+            
+            x = rets[port_rets.name].values.astype(np.float64)
+            y = rets[rate].values.astype(np.float64)
+            
+            corrs = rets.astype(np.float64).corr()
+
+            corr = corrs.loc[rate, str(port_rets.name)]
+            if sigmas:
+                return (corr, x.std()*np.sqrt(250),
+                        y.std()*np.sqrt(250))
+            return corr
     
     def sharpe_ratio_ptf(self, first='today', last='today', rebalancing = True):
         from scipy.stats.mstats import gmean
