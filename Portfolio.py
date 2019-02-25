@@ -201,13 +201,13 @@ class Portfolio :
             p.iloc[0,:] = self._portfolio.Weight.values
             print(p)
             p = np.cumsum(p, axis=0)
-            return p.sum(axis=1) 
+            return pd.Series(p.sum(axis=1), name = self.name)
         else:
             prices = self.get_timeseries(first, last)
             initial_weights = self._portfolio.loc[:, 'Weight']
             prices.iloc[1:,:] = (prices.iloc[1:,:].values / prices.iloc[0,:].values)*initial_weights.values
             prices.iloc[0,:] = initial_weights.values
-            return prices.sum(axis=1) 
+            return pd.Series(prices.sum(axis=1), name = self.name)
         
     def get_timeseries(self, first='today', last='today', spec='Adj Close', tick=True, extra_tick=''):
         ## Dates have to be given as pandas compatible dates
