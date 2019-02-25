@@ -461,11 +461,16 @@ class Portfolio :
                 raise Exception ("Error getting the rates")
             port_rets = compute_returns(port_vals)
             rates /= 100.0
-            norm_vals = (port_vals/port_vals.values[0])-1
+            rate_ = rates.iloc[0] + 1
+            n = len(port_rets)
+            temp = np.cumsum(np.ones(n))
+            fixed = (rate_)**(temp/250.0)
+            
+            norm_vals = (port_vals/port_vals.values[1])
             norm_vals = norm_vals.loc[port_rets.index]
             rets = pd.DataFrame(port_rets)
 
-            rets[rate] = rates
+            rets[rate] = fixed
             rets['Normalized Values'] = norm_vals
             if plot:
                 rets.plot(figsize = (10,10))
