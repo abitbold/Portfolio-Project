@@ -178,7 +178,7 @@ def stock_financials(stock_list):
     print("Choose a security for which to view financials. Enter the id: ")
     for idx, val in enumerate(stock_list):
         print(str(idx+1) + '. ', val, sep = '\t')
-    print(str(n + 1) + '. \tView statistics for all')
+    print(str(n + 1) + '. \tView financials for all')
     print('0. \tReturn to menu')
     sec = input("Enter a key: ")
     try:
