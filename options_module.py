@@ -1,4 +1,4 @@
-## file name : option_module.py
+## file name : options_module.py
 ## 
 ## team member:
 ##      Arjun Alagappan
