@@ -1,3 +1,15 @@
+## file name : stock.py
+## 
+## team member:
+##      Arjun Alagappan
+##      David Abitbol
+##      Cody Cao
+##      Lily li
+##      Shanshan Liu
+##      Kurtis Lee
+##
+## This file contains function for stocks. It is maily a wrapper that creates a portfolio of one stock, and call the portfolio methd.
+
 from Portfolio import Portfolio
 import pandas as pd
 
