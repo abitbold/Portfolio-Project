@@ -1,4 +1,15 @@
 ## Porfolio class
+## team member:
+##      Arjun Alagappan
+##      David Abitbol
+##      Cody Cao
+##      Lily li
+##      Shanshan Liu
+##      Kurtis Lee
+##
+## This file contain the portfolio class. This class is at the heart of our project.
+## The class' methods allows us to compute everythin our application (mainmenu) will compute and show
+
 
 import pandas as pd
 import numpy as np
