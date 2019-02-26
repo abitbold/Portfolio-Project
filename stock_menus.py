@@ -1,3 +1,5 @@
+# Menus for the stock analysis functionality
+
 from stock import *
 from Portfolio import *
 from func import *
