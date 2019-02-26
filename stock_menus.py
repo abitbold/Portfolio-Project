@@ -368,7 +368,7 @@ def options_menu(stock_list = None):
                     time.sleep(3)
                     try:
                         date = check_date(date)
-                        options_visualization_straddle_payoff(choice, date)
+                        options_visualization_straddle_payoff(df_straddle,choice, date)
                     except:
                         print("Exiting to options menu...")
                         time.sleep(3)
