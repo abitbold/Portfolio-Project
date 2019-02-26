@@ -1,4 +1,16 @@
-# Functions used with the portfolio class
+## file name : func.py
+## 
+## team member:
+##      Arjun Alagappan
+##      David Abitbol
+##      Cody Cao
+##      Lily li
+##      Shanshan Liu
+##      Kurtis Lee
+##
+## This file containf helper functions for the the portfolio class
+
+
 import pandas as pd
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
