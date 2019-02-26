@@ -647,17 +647,27 @@ def port_comp_menu():
             except:
                 print(dt[i], ' is not in the correct format')
                 pause()
-        print('\n\nEnter the ticker you to compare your portfolio against (Could the ticker from a stock or an index. Should be a yahoo finance ticker')
+        print('\n\nEnter the ticker you want to compare your portfolio against . It could the ticker from a stock or an index. (Should be a yahoo finance ticker)')
+        print('Enter Rate to compare you portfolio to the 10 years rate')
         print('Press enter to automatically compare your portfolio against the SP500')
         tick = input('Enter ticker ...\n').strip()
         if tick == '':
             selected_port[0].benchmark(dt[0], dt[1], index='^GSPC', plot= True, sigmas=True)
             pause()
             return 0
-        else:
-            selected_port[0].benchmark(dt[0], dt[1], index = tick, plot= True, sigmas=True)
+        elif tick == 'Rate':
+            selected_port[0].benchmark(dt[0], dt[1], plot= True, sigmas=True)
             pause()
             return 0
+        else:
+            try:
+                selected_port[0].benchmark(dt[0], dt[1], index = tick, plot= True, sigmas=True)
+                pause()
+                return 0
+            except:
+                print('The ticker you entered is not a valid ticker')
+                pause()
+                return 1
         return 0
 
 def port_comp_metrics():
