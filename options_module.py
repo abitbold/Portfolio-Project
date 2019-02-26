@@ -147,7 +147,7 @@ def get_options_dfs(tcker_list):
         df['Today'] = pd.to_datetime(df['Today'])
         df['Time to Expiration'] = np.busday_count(df['Today'].values.astype('datetime64[D]'),df['Expiration'].values.astype('datetime64[D]'))
 
-        rate = get_rates(datetime.datetime.now() - datetime.timedelta(days = 7), 'today').iloc[-1,:]['10yr']
+        rate = get_rates(datetime.datetime.now() - datetime.timedelta(days = 7), 'today').iloc[-1,:]['10yr']/100
         
         
         
@@ -157,7 +157,7 @@ def get_options_dfs(tcker_list):
                                                                        get_dividend(row['Ticker']), #Pull dividend data, get_dividend()
                                                                        row['Implied Vol']**2, 
                                                                        row['Time to Expiration']/252,
-                                                                       0.04, #calibrate Model
+                                                                       0.01, #calibrate Model
                                                                        0.01, #calibrate Model
                                                                        row['Call/Put']), axis=1)
 
@@ -168,6 +168,7 @@ def get_options_dfs(tcker_list):
         df_atm=df[(df.ATM==True) & (df['Time to Expiration']>0)].loc[:,df.columns!='Today']
 
         df_atm=df_atm.sort_values(by='Expiration')
+        df_new=df[df['Time to Expiration']>0]
         
         #####Identify Prices#####
         
@@ -181,7 +182,7 @@ def get_options_dfs(tcker_list):
 
         df_straddle=df_straddle.reset_index()     
         
-    return df,df_atm,df_straddle
+    return df_new,df_atm,df_straddle
     
 
     
@@ -280,7 +281,7 @@ def options_visualization_mispricing_hist(df):
 # In[11]:
 
 
-def options_visualization_straddle_payoff(stock,expir):
+def options_visualization_straddle_payoff(df_straddle,stock,expir):
 
     try:
         opt = df_straddle.loc[(df_straddle.Ticker==stock) & (df_straddle.Expiration==expir)]
@@ -332,5 +333,5 @@ if __name__ == '__main__':
     options_visualization_vol_skew(df_atm)
     options_visualization_mispricing_scat(df)
     options_visualization_mispricing_hist(df)
-    options_visualization_straddle_payoff('GOOG','2019-02-22')
+    options_visualization_straddle_payoff(df_straddle,'GOOG','2019-02-22')
 
