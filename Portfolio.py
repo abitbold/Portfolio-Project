@@ -170,27 +170,26 @@ class Portfolio :
     
     def summary(self):
         return Portfolio.base_stats.loc[self._portfolio.index,:].transpose()
-    
-    #def ptf_tms(self, first = 'today', last = 'today', rebalancing = True):
+     
+    #def ptf_tms(self, first = 'last_week', last = 'today', rebalancing = True):
     #    if rebalancing:
-    #        initial_weights = self._portfolio.loc[:, 'Weight']
-    #        prices = self.get_timeseries(first, last)
-    #       prices = prices/prices.iloc[0,:]
-    #        prices.iloc[1:,:] = (prices.iloc[1:,:].values / prices.iloc[0:-1,:].values)*initial_weights.values
-    #        prices.iloc[0,:] = initial_weights
-    #        return prices.sum(axis=1)
-    #    else:
     #        prices = self.get_timeseries(first, last)
     #        p = prices.copy()
-    #        prices = prices/prices.iloc[0,:]
-    #        weights = np.zeros((len(prices.iloc[:,0]), len(self._portfolio.index)))
+    #        p1 = prices.iloc[1:,:].reset_index(drop=True).copy()
+    #        p2 = prices.iloc[0:-1,:].reset_index(drop=True).copy()
+    #        initial_weights = pd.DataFrame([self._portfolio.loc[:, 'Weight'].transpose().values.tolist()]*len(p1.index)).reset_index(drop=True)
+    #        p.iloc[1:,:] = (p1 / p2).values*initial_weights.values-initial_weights.values
+    #        p.iloc[0,:] = self._portfolio.Weight.values
+    #        p = np.cumsum(p, axis=0)
+    #        return pd.Series(p.sum(axis=1), name = self.name)
+    #    else:
+    #        prices = self.get_timeseries(first, last)
     #        initial_weights = self._portfolio.loc[:, 'Weight']
-    #        weights[0,:] = self._portfolio.Weight.values
-    #        weights[1:, :] = (prices.iloc[1:,:].values*initial_weights.values)/np.array([(prices.iloc[1:, :].values*initial_weights.values).sum(axis=1).tolist()]).transpose()
-    #        p.iloc[1:,:] = (p.iloc[1:,:].values / p.iloc[0:-1,:].values)*weights[0:-1, :]
-    #        p.iloc[0,:] = initial_weights
-    #        return p.sum(axis=1)
-     
+    #        prices.iloc[1:,:] = (prices.iloc[1:,:].values / prices.iloc[0,:].values)*initial_weights.values
+    #        prices.iloc[0,:] = initial_weights.values
+    #        return pd.Series(prices.sum(axis=1), name = self.name)
+        
+        
     def ptf_tms(self, first = 'last_week', last = 'today', rebalancing = True):
         if rebalancing:
             prices = self.get_timeseries(first, last)
@@ -199,7 +198,7 @@ class Portfolio :
             p2 = prices.iloc[0:-1,:].reset_index(drop=True).copy()
             initial_weights = pd.DataFrame([self._portfolio.loc[:, 'Weight'].transpose().values.tolist()]*len(p1.index)).reset_index(drop=True)
             p.iloc[1:,:] = (p1 / p2).values*initial_weights.values-initial_weights.values
-            p.iloc[0,:] = self._portfolio.Weight.values
+            p.iloc[0,:] = self._portfolio.Weight.values/self._portfolio.Weight.sum()
             p = np.cumsum(p, axis=0)
             return pd.Series(p.sum(axis=1), name = self.name)
         else:
@@ -207,7 +206,16 @@ class Portfolio :
             initial_weights = self._portfolio.loc[:, 'Weight']
             prices.iloc[1:,:] = (prices.iloc[1:,:].values / prices.iloc[0,:].values)*initial_weights.values
             prices.iloc[0,:] = initial_weights.values
-            return pd.Series(prices.sum(axis=1), name = self.name)
+            tms = pd.Series(prices.sum(axis=1), name = self.name)
+            p1 = tms.iloc[1:].reset_index(drop=True).copy()
+            p2 = tms.iloc[0:-1].reset_index(drop=True).copy()
+            R = pd.Series(index=prices.index)
+            initial_weights = initial_weights.sum()
+            R.iloc[1:] = (((p1/p2 -1) * initial_weights) + 1).values
+            R.iloc[0] = 1
+            R = np.cumprod(R)
+            return R
+        
         
     def get_timeseries(self, first='today', last='today', spec='Adj Close', tick=True, extra_tick=''):
         ## Dates have to be given as pandas compatible dates
