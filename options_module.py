@@ -1,8 +1,15 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
+## file name : option_module.py
+## 
+## team member:
+##      Arjun Alagappan
+##      David Abitbol
+##      Cody Cao
+##      Lily li
+##      Shanshan Liu
+##      Kurtis Lee
+##
+## This file contains all of the code related to the option. Options do not evolve like stock and portfolio, 
+##hence they cannot use the same methods, and have their own module
 
 from wallstreet import Stock,Call,Put #pip install wallstreet
 
