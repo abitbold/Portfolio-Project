@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Feb 22 02:12:30 2019
+# Main menu of our application
 
-@author: abdav
-"""
 import os
 from Portfolio import Portfolio
 import pandas as pd
