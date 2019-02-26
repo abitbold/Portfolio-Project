@@ -7,7 +7,6 @@ import os
 import time
 from options_module import *
 from yahoo import *
-import mainmenu
 
 def check_positive(i):
     if i <= 0:
@@ -452,7 +451,7 @@ def stock_menu(stock_list = None):
         time.sleep(3)
         return options_menu(stock_list)
     elif key == '0':
-        mainmenu.main_menu()
+        return 25
     return 1
 
 
