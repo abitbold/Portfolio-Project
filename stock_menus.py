@@ -80,7 +80,8 @@ def stock_explore(ticker_interest = None, options = False):
                     continue
                 cs()
                 print("Current selection: ")
-                print(new_tick_list)
+                for idx, val in enumerate(new_tick_list):
+                    print(str(idx+1) + '. ', val, sep = '\t')
             print("Stocks chosen!")
             time.sleep(2)
             if options:
