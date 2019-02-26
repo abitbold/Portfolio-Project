@@ -972,122 +972,125 @@ def main():
     
     current = 'main_menu()'
     while True:
-        response = eval(current)
-        
-        if current == 'main_menu()':
-            if response == 1:
-                current = 'stock_menus.stock_menu()'
-            elif response == 2:
-                current = 'load_portfolio_menu()'
-            elif response == 3:
-                current = 'create_portfolio_menu()'
-            elif response == 4:
-                current = 'delete_portfolio_menu()'
-            elif response == 5:
-                current = 'see_loaded_portfolio_menu()'
-            elif response == 6:
-                current = 'save_portfolio_menu()'
-            elif response == 7:
-                current = 'select_portfolio_menu()'
-            elif response == 0:
-                break
-        elif current == 'stock_menus.stock_menu()':
-            current = 'main_menu()'
-            
-        elif current == 'load_portfolio_menu()':
-            if response == 1: current = 'main_menu()'
-            elif response == 2 : current = 'load_portfolio_menu()'
-        
-        elif current == 'delete_portfolio_menu()':
-            current = 'main_menu()'
-        
-        elif current == 'see_loaded_portfolio_menu()':
-            if response ==1 : current = 'main_menu()'
-            if response ==2 : current = 'see_loaded_portfolio_menu()'
-        
-        elif current == 'save_portfolio_menu()':
-            if response ==1 : current = 'main_menu()'
-            elif response == 2 : 'save_portfolio_menu()'
+        try: 
+            response = eval(current)
 
-        elif current == 'create_portfolio_menu()':
-            if response == 1 : current = 'main_menu()'
-            if response == 2 : current = 'stock_portfolio()'
-            if response == 3 : current = 'filter_portfolio()'
+            if current == 'main_menu()':
+                if response == 1:
+                    current = 'stock_menus.stock_menu()'
+                elif response == 2:
+                    current = 'load_portfolio_menu()'
+                elif response == 3:
+                    current = 'create_portfolio_menu()'
+                elif response == 4:
+                    current = 'delete_portfolio_menu()'
+                elif response == 5:
+                    current = 'see_loaded_portfolio_menu()'
+                elif response == 6:
+                    current = 'save_portfolio_menu()'
+                elif response == 7:
+                    current = 'select_portfolio_menu()'
+                elif response == 0:
+                    break
+            elif current == 'stock_menus.stock_menu()':
+                current = 'main_menu()'
 
-        elif current == 'filter_portfolio()':
-            if response == 0 : current='main_menu()'
-            if response == 1 : current='filter_portfolio()'
-        
-        elif current == 'stock_portfolio()':
-            current = 'main_menu()'
-            
-        elif current == 'select_portfolio_menu()':
-            if response == 0 : current = 'main_menu()'
-            if response == 1 : current = 'edit_portfolio_menu()'
-            if response == 2 : current = 'portfolio_analysis_menu()'
-            
-        elif current == 'edit_portfolio_menu()':
-            if response == 0 : current = 'main_menu()'
-            if response == 1: current = 'set_weights_menu()'
-            if response == 2 : current = 'add_stock_menu()'
-            if response == 3 : current = 'remove_stock_menu()'
-            
-        elif current == 'set_weights_menu()':
-            if response == 0 : current = 'main_menu()'
-            if response == 1 : current = 'edit_portfolio_menu()'
-            
-        elif current == 'add_stock_menu()':
-            if response == 0 : current = 'main_menu()'
-            if response == 1 : current = 'edit_portfolio_menu()'
-            
-        elif current == 'remove_stock_menu()':
-            if response == 0 : current = 'main_menu()'
-            if response == 1 : current = 'edit_portfolio_menu()'
-        
-        elif current == 'portfolio_analysis_menu()':
-            if response == 1 : current = 'portfolio_metrics()'
-            if response == 2 : current = 'portfolio_summary()'
-            if response == 3 : current = 'portfolio_tms()'
-            if response == 4 : current = 'portfolio_return()'
-            if response == 5 : current = 'portfolio_sigma()'
-            if response == 6 : current = 'port_comp_menu()'
-            if response == 7 : current = 'stock_tms()'
-            if response == 8 : current = 'port_comp_port_menu()'
-            if response == 9 : current = 'port_comp_metrics()'
-            if response == 0 : current = 'main_menu()'
-        
-        elif current == ('portfolio_metrics()'):
-            if response == 0: current = 'portfolio_analysis_menu()'
-            
-        elif current == ('portfolio_summary()'):
-            if response == 0: current = 'portfolio_analysis_menu()'
-            
-        elif current == ('portfolio_tms()'):
-            if response == 0: current = 'portfolio_analysis_menu()'
-        
-        elif current == ('stock_tms()'):
-            if response == 0: current = 'portfolio_analysis_menu()'
-            
-        elif current == ('portfolio_return()'):
-            if response == 0: current = 'portfolio_analysis_menu()'
-            
-        elif current == ('portfolio_sigma()'):
-            if response == 0: current = 'portfolio_analysis_menu()'
-        
-        elif current == 'port_comp_menu()':
-            if response == 0: current = 'portfolio_analysis_menu()'
-            if response ==1 : current = 'port_comp_menu()'
-        
-        elif current == 'port_comp_port_menu()':
-            if response == 0: current = 'portfolio_analysis_menu()'
-            if response == 1 : current = 'port_comp_port_menu()'
-            if response == 2 : current = 'main_menu()'
-        
-        elif current == 'port_comp_metrics()':
-            if response == 0: current = 'portfolio_analysis_menu()'
-            if response == 1 : current = 'port_comp_metrics()'
-            if response == 2 : current = 'main_menu()'
-     
+            elif current == 'load_portfolio_menu()':
+                if response == 1: current = 'main_menu()'
+                elif response == 2 : current = 'load_portfolio_menu()'
+
+            elif current == 'delete_portfolio_menu()':
+                current = 'main_menu()'
+
+            elif current == 'see_loaded_portfolio_menu()':
+                if response ==1 : current = 'main_menu()'
+                if response ==2 : current = 'see_loaded_portfolio_menu()'
+
+            elif current == 'save_portfolio_menu()':
+                if response ==1 : current = 'main_menu()'
+                elif response == 2 : 'save_portfolio_menu()'
+
+            elif current == 'create_portfolio_menu()':
+                if response == 1 : current = 'main_menu()'
+                if response == 2 : current = 'stock_portfolio()'
+                if response == 3 : current = 'filter_portfolio()'
+
+            elif current == 'filter_portfolio()':
+                if response == 0 : current='main_menu()'
+                if response == 1 : current='filter_portfolio()'
+
+            elif current == 'stock_portfolio()':
+                current = 'main_menu()'
+
+            elif current == 'select_portfolio_menu()':
+                if response == 0 : current = 'main_menu()'
+                if response == 1 : current = 'edit_portfolio_menu()'
+                if response == 2 : current = 'portfolio_analysis_menu()'
+
+            elif current == 'edit_portfolio_menu()':
+                if response == 0 : current = 'main_menu()'
+                if response == 1: current = 'set_weights_menu()'
+                if response == 2 : current = 'add_stock_menu()'
+                if response == 3 : current = 'remove_stock_menu()'
+
+            elif current == 'set_weights_menu()':
+                if response == 0 : current = 'main_menu()'
+                if response == 1 : current = 'edit_portfolio_menu()'
+
+            elif current == 'add_stock_menu()':
+                if response == 0 : current = 'main_menu()'
+                if response == 1 : current = 'edit_portfolio_menu()'
+
+            elif current == 'remove_stock_menu()':
+                if response == 0 : current = 'main_menu()'
+                if response == 1 : current = 'edit_portfolio_menu()'
+
+            elif current == 'portfolio_analysis_menu()':
+                if response == 1 : current = 'portfolio_metrics()'
+                if response == 2 : current = 'portfolio_summary()'
+                if response == 3 : current = 'portfolio_tms()'
+                if response == 4 : current = 'portfolio_return()'
+                if response == 5 : current = 'portfolio_sigma()'
+                if response == 6 : current = 'port_comp_menu()'
+                if response == 7 : current = 'stock_tms()'
+                if response == 8 : current = 'port_comp_port_menu()'
+                if response == 9 : current = 'port_comp_metrics()'
+                if response == 0 : current = 'main_menu()'
+
+            elif current == ('portfolio_metrics()'):
+                if response == 0: current = 'portfolio_analysis_menu()'
+
+            elif current == ('portfolio_summary()'):
+                if response == 0: current = 'portfolio_analysis_menu()'
+
+            elif current == ('portfolio_tms()'):
+                if response == 0: current = 'portfolio_analysis_menu()'
+
+            elif current == ('stock_tms()'):
+                if response == 0: current = 'portfolio_analysis_menu()'
+
+            elif current == ('portfolio_return()'):
+                if response == 0: current = 'portfolio_analysis_menu()'
+
+            elif current == ('portfolio_sigma()'):
+                if response == 0: current = 'portfolio_analysis_menu()'
+
+            elif current == 'port_comp_menu()':
+                if response == 0: current = 'portfolio_analysis_menu()'
+                if response ==1 : current = 'port_comp_menu()'
+
+            elif current == 'port_comp_port_menu()':
+                if response == 0: current = 'portfolio_analysis_menu()'
+                if response == 1 : current = 'port_comp_port_menu()'
+                if response == 2 : current = 'main_menu()'
+
+            elif current == 'port_comp_metrics()':
+                if response == 0: current = 'portfolio_analysis_menu()'
+                if response == 1 : current = 'port_comp_metrics()'
+                if response == 2 : current = 'main_menu()'
+        except:
+            print('An error occured. You are being redirected to the main menu. The last version of your loaded prtfolios should be there')
+            current == 'main_menu()'
         
     print_menu_name('Exit')
     L = os.listdir(r'Saved')
