@@ -1,3 +1,15 @@
+## file name : yahoo.py
+## 
+## team member:
+##      Arjun Alagappan
+##      David Abitbol
+##      Cody Cao
+##      Lily li
+##      Shanshan Liu
+##      Kurtis Lee
+##
+## this file contains the fnction to connect to yahoo and scrape data for our portfolios. 
+
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
