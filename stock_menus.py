@@ -1,4 +1,14 @@
-# Menus for the stock analysis functionality
+## file name : stock_menus.py
+## 
+## team member:
+##      Arjun Alagappan
+##      David Abitbol
+##      Cody Cao
+##      Lily li
+##      Shanshan Liu
+##      Kurtis Lee
+##
+## This file contains the menus and control the floes for the stock analysis functionality
 
 from stock import *
 from Portfolio import *
