@@ -1095,7 +1095,7 @@ def main():
     if len(L)>0:
         for el in L:
             if el.split('_')[0] != 'base':
-                L2.append(el.split('_')[0].split('.csv')[0])
+                L2.append(el.split('.csv')[0])
                 
                 
     for p in list(port_dict.values()):
