@@ -1,4 +1,15 @@
-# Main menu of our application
+## file name : mainmenu.py
+## 
+## team member:
+##      Arjun Alagappan
+##      David Abitbol
+##      Cody Cao
+##      Lily li
+##      Shanshan Liu
+##      Kurtis Lee
+##
+## This is the main file of our application. It is the one is being launched. It controls the flow of the application
+
 
 import os
 from Portfolio import Portfolio
