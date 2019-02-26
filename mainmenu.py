@@ -1090,7 +1090,8 @@ def main():
                 if response == 2 : current = 'main_menu()'
         except:
             print('An error occured. You are being redirected to the main menu. The last version of your loaded prtfolios should be there')
-            current == 'main_menu()'
+            current = 'main_menu()'
+            pause()
         
     print_menu_name('Exit')
     L = os.listdir(r'Saved')
