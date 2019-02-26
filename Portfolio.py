@@ -549,6 +549,7 @@ class Portfolio :
         df[ts2.name] = ts2
         
         df.plot(figsize = (8,6))
+        plt.show()
 
         corr = df.astype(np.float64).corr().loc[str(ts1.name), str(ts2.name)]
         return corr
