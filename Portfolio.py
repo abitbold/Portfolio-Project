@@ -9,7 +9,7 @@
 ##      Kurtis Lee
 ##
 ## This file contain the portfolio class. This class is at the heart of our project.
-## The class' methods allows us to compute everythin our application (mainmenu) will compute and show
+## The class' methods allows us to compute everything our application (mainmenu) will compute and show
 ## This file imports: func.py, yahoo.py
 ## This file is imported by: mainmenu.py, stock_menu.py, stock.py
 
