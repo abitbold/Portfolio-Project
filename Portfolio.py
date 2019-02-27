@@ -473,7 +473,7 @@ class Portfolio :
             indextoplot = 100*i_ts/i_ts.iloc[0]
             if returns:
                 indextoplot = compute_returns(i_ts,log)
-            return benchmark_help(toplot, indextoplot, plot, sigmas,normalize)
+            return benchmark_help(toplot, indextoplot, plot, sigmas)
         else:
             try:
                 print("Getting rates from the Fed")
