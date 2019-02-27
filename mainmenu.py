@@ -234,14 +234,14 @@ def filter_portfolio():
     
     while True:
         print("""\n\n1 - Forward P/E
-2 - Market Cap (intraday)
-3 - Diluted EPS
-4 - Forward Annual Dividend Yield
-5 - Operating Margin
-6 - Profit Margin
-7 - Beta (3Y Monthly)
-8 - Avg Vol (3 month)
-9 - Quarterly Revenue Growth
+2 - Market Cap (intraday) (in dollar)
+3 - Diluted EPS ( in dollar)
+4 - Forward Annual Dividend Yield (in perccentage -- 0.1 for 10%)
+5 - Operating Margin (in perccentage -- 0.1 for 10%)
+6 - Profit Margin (in perccentage -- 0.1 for 10%)
+7 - Beta (3Y Monthly) 
+8 - Avg Vol (3 month) (in number share traded)
+9 - Quarterly Revenue Growth (in perccentage -- 0.1 for 10%)
               
 0 : Press 0 to return to the previous menu
               
