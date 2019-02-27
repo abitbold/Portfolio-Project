@@ -27,9 +27,9 @@ In your Anaconda prompt, to install `package1`, `package2`, `package3`, type:
 
 &nbsp;
 
-<center>
+<p align="center">
 <img src="https://i.ibb.co/R48xJ7d/mainmenu1.png" alt="mainmenu1" border="0" height="100" width="470">
-</center>
+</p>
 
 &nbsp;
 
@@ -37,9 +37,9 @@ In your Anaconda prompt, to install `package1`, `package2`, `package3`, type:
 
 &nbsp;
 
-<center>
+<p align="center">
 <img src="https://i.ibb.co/zRw05PD/mainmenu2.png" alt="mainmenu2" border="0" height="300" width="430">
-</center>
+</p>
 
 &nbsp;
 
