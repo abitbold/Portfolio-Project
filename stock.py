@@ -8,7 +8,9 @@
 ##      Shanshan Liu
 ##      Kurtis Lee
 ##
-## This file contains function for stocks. It is maily a wrapper that creates a portfolio of one stock, and call the portfolio methd.
+## This file contains function for stocks. It is mainly a wrapper that creates a portfolio of one stock, and call the portfolio method.
+## This file imports: Portfolio.py
+## This file is imported by: stock_menu.py
 
 from Portfolio import Portfolio
 import pandas as pd
