@@ -14,10 +14,7 @@ In your Anaconda prompt, to install `package1`, `package2`, `package3`, type:
 >`pip install package1, package2, package3`
 
 
-
-<center>
-<img src="https://i.ibb.co/SrTnB4M/pip-install.png" alt="pip-install" border="0" height="100" width="500">
-</center>
+<img src="https://i.ibb.co/SrTnB4M/pip-install.png" alt="pip-install" border="0" height="100" width="500" align="center">
 
 &nbsp;
 
