@@ -42,7 +42,7 @@ import os
 ```
 5. Set directory to the location of the PokeQuant folder.
 ```python
-os.chdir('Path\To\Folder')
+os.chdir(r'Path\To\Folder')
 ```
 6. Run the `mainmenu.py` script with the following code.
 ```python
