@@ -14,6 +14,8 @@ In your Anaconda prompt, to install `package`, type:
 >`pip install package`
 
 
+For example, install `pandas_datareader` with
+
 <p align="center">
 <img src="https://i.ibb.co/YpbyPCX/pip-install.png" alt="pip-install" border="0" height="120" width="360">
 </p>
