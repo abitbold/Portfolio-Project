@@ -8,20 +8,21 @@ PokeQuant is a software tool to perform financial analyses of stocks, options, a
 * Install [Anaconda](https://www.anaconda.com/distribution/#download-section) with Python 3.7
 * Install the following packages: `pandas_datareader`,`wallstreet`, `bs4`, `urllib`
 
-In your Anaconda prompt, to install `package1`, `package2`, `package3`, type:
+In your Anaconda prompt, to install `package`, type:
 
 
->`pip install package1, package2, package3`
+>`pip install package`
+
 
 <p align="center">
-<img src="https://i.ibb.co/SrTnB4M/pip-install.png" alt="pip-install" border="0" height="100" width="500">
+<img src="https://i.ibb.co/YpbyPCX/pip-install.png" alt="pip-install" border="0" height="120" width="360">
 </p>
-
 
 &nbsp;
 
+
 ## How to Use
-1. Download the zip file and extract all the contents to the same folder.
+1. Download the zip file from GitHub and extract all the contents to the same folder.
 2. Open your Anaconda prompt and navigate to the directory of the PokeQuant folder.
 3. Type `python mainmenu.py` to begin running the program.
 
