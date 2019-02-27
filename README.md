@@ -24,7 +24,7 @@ For example, install `pandas_datareader` with
 
 
 ## How to Use
-1. Download the zip file from GitHub and extract all the contents to the same folder.
+1. Download the zip file from ![GitHub](https://github.com/abitbold/Portfolio-Project) and extract all the contents to the same folder.
 2. Open your Anaconda prompt and navigate to the directory of the PokeQuant folder.
 3. Type `python mainmenu.py` to begin running the program.
 
