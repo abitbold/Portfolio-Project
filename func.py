@@ -131,32 +131,52 @@ def compute_returns(ts, log = False):
         return pd.Series((ts.iloc[1:,0].values/ts.iloc[:-1,0].values) - 1, index = idxs)
     
 def benchmark_help(ts1, ts2, plot = False, sigmas = False, 
-    normalize = False, Fed = False):
+    normalize = False):
     # only take in series
     # 11:07 PM
     if normalize:
         ts1 = (ts1-ts1.mean())/ts1.std()
-        if not Fed:
-            ts2 = (ts2-ts2.mean())/ts2.std()
-    xs = ts1.index
-    if Fed: # want the percentages as a decimal
-        ts2/=100.0
+        ts2 = (ts2-ts2.mean())/ts2.std()
+    xs1 = ts1.index
+    xs2 = ts2.index
+    idx = xs1.intersection(xs2)
+    
+    if len(xs1) > len(xs2):
+        print("Time series are of different length.\n")
+        m_idx = idx.min()
+        m_idx_p = ts1.loc[m_idx]
+        ts1 = 100*ts1/ts1.iloc[0]
+        ts2 = m_idx_p*ts2/ts2.iloc[0]
+    elif len(xs1) < len(xs2):
+        print("Time series are of different length.\n")
+        m_idx = idx.min()
+        m_idx_p = ts2.loc[m_idx]
+        ts2 = 100*ts2/ts2.iloc[0]
+        ts1 = m_idx_p*ts1/ts1.iloc[0] 
+    else:
+        ts1 = 100*ts1/ts1.iloc[0]
+        ts2 = 100*ts2/ts2.iloc[0]
+    
+    ts1_n = ts1.loc[idx]
+    ts2_n = ts2.loc[idx]
+    ts1_n = 100*ts1_n/ts1_n.iloc[0]
+    ts2_n = 100*ts2_n/ts2_n.iloc[0]
+    
+    df = pd.DataFrame({ts1.name: ts1_n, ts2.name: ts2_n}, index = idx)
+    
     if plot:
         plt.figure(figsize = (8,6))
         plt.title("Time Series")
         plt.xlabel("Date")
         plt.ylabel("Scaled Price")
-        plt.plot(xs, ts1, c = 'b', label = ts1.name)
-        plt.plot(xs, ts2, c = 'r', label = ts2.name)
+        plt.plot(xs1, ts1, c = 'b', label = ts1.name)
+        plt.plot(xs2, ts2, c = 'r', label = ts2.name)
         plt.legend()
         plt.show()
-
-    x = ts1.astype('float64')
-    y = ts2.astype('float64')
-    df = pd.DataFrame(x)
-    df['2'] = y
+    
     corr = df.corr().iloc[0,1]
+
     if sigmas:
-        return (corr, x.std()*np.sqrt(250),
-            y.std()*np.sqrt(250))
+        return (corr, ts1.std()*np.sqrt(250),
+            ts2.std()*np.sqrt(250))
     return corr
