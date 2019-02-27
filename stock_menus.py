@@ -301,6 +301,8 @@ def stock_comparisons(stock_list = None):
     
     
     
+    
+    
 def options_menu(stock_list = None):
     cs()
     if not stock_list:
@@ -385,6 +387,10 @@ def options_menu(stock_list = None):
                         print("Exiting to options menu...")
                         time.sleep(3)
                         break
+                elif key == '0':
+                    print("Exiting to stock menu...")
+                    time.sleep(2)
+                    break
             
         elif k == '4':
             print("Selecting new stocks...")
@@ -398,6 +404,9 @@ def options_menu(stock_list = None):
             continue
             
     
+    
+    
+           
     
     
         
