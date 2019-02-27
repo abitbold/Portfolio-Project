@@ -22,10 +22,10 @@ In your Anaconda prompt, to install `package`, type:
 
 >`pip install package`
 
-For example, to install `pandas_datareader`, enter:
+For example, to install `wallstreet`, enter:
 
 <p align="center">
-<img src="https://i.ibb.co/YpbyPCX/pip-install.png" alt="pip-install" border="0" height="120" width="360">
+<img src="https://i.ibb.co/ZGr5p0h/pip-install.png" alt="pip-install" border="0" height="120" width="360">
 </p>
 
 &nbsp;
