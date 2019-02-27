@@ -9,7 +9,9 @@
 ##      Kurtis Lee
 ##
 ## This file contains all of the code related to the option. Options do not evolve like stock and portfolio, 
-##hence they cannot use the same methods, and have their own module
+## hence they cannot use the same methods, and have their own module
+## This file imports: func.py
+## This file is imported by: stock_menu.py
 
 from wallstreet import Stock,Call,Put #pip install wallstreet
 
