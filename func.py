@@ -8,8 +8,9 @@
 ##      Shanshan Liu
 ##      Kurtis Lee
 ##
-## This file containf helper functions for the the portfolio class
-
+## This file contains helper functions for the the portfolio class
+## This file imports: yahoo.py
+## This file is imported by: mainmenu.py, Portfolio.py, options_module.py
 
 import pandas as pd
 from urllib.request import urlopen
