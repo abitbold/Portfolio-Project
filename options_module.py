@@ -246,6 +246,9 @@ def get_top3(df):
 
 
 def options_visualization_vol_skew(df_atm):
+    if df_atm.empty:
+        print("No at the money options available\n")
+    
     for stock in df_atm.Ticker.unique():
         plt.plot(df_atm.loc[(df_atm.Ticker==stock) & (df_atm['Call/Put']=='Call')].Expiration,
                     df_atm.loc[(df_atm.Ticker==stock) & (df_atm['Call/Put']=='Call')]['Implied Vol'],label=stock)     
