@@ -9,7 +9,8 @@
 ##      Kurtis Lee
 ##
 ## This is the main file of our application. It is the one is being launched. It controls the flow of the application
-
+## This file imports: stock_menu.py, func.py, Portfolio.py
+## This file is imported by nothing
 
 import os
 from Portfolio import Portfolio
