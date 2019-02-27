@@ -8,7 +8,9 @@
 ##      Shanshan Liu
 ##      Kurtis Lee
 ##
-## this file contains the fnction to connect to yahoo and scrape data for our portfolios. 
+## This file contains the fnction to connect to yahoo and scrape data for our portfolios.
+## This file imports nothing
+## This file is imported by: Portfolio.py, func.py, stock_menu.py
 
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
