@@ -14,7 +14,7 @@ PokeQuant is a software tool to perform financial analyses of stocks, options, a
 
   * `bs4`
 
-  * `urllib`
+  * `urlopen`
 
 
 In your Anaconda prompt, to install `package`, type:
