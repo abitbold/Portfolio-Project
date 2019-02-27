@@ -44,10 +44,6 @@ import re
 
 
 # # Function Definitions for Monte Carlo Simulation
-
-# In[3]:
-
-
 def black_scholes(S0,K,r,sigma,T,d,pc):
 
     d1=(np.log(S0/K)+(r-d+0.5*sigma**2)*T)/(sigma*np.sqrt(T))
@@ -67,7 +63,6 @@ def black_scholes(S0,K,r,sigma,T,d,pc):
 #Need to call dividends and rates from other data
 def stochastic_vol_bs(S0,K,r,q,V0,T,alpha,psi,pc,N=100,n=52):
     d = T/float(N)
-    #V0=np.sqrt(V0)
     
     #Geometric browning motion for vol
     f1 = (alpha-0.5*psi**2)*d
@@ -92,8 +87,6 @@ def stochastic_vol_bs(S0,K,r,q,V0,T,alpha,psi,pc,N=100,n=52):
 
 
 # # Function Definitions for DataFrame Creation
-
-# In[4]:
 
 
 
@@ -159,7 +152,7 @@ def get_options_dfs(tcker_list):
         rate = get_rates(datetime.datetime.now() - datetime.timedelta(days = 7), 'today').iloc[-1,:]['10yr']/100
         
         
-        
+        #Calculate prices
         df['PokeQuant Price'] = df.apply(lambda row: stochastic_vol_bs(row['Underlying Price'], 
                                                                        row['Strike'],
                                                                        rate,
@@ -194,25 +187,6 @@ def get_options_dfs(tcker_list):
     return df_new,df_atm,df_straddle
     
 
-    
-
-
-# # Data Test
-
-# In[5]:
-
-
-
-
-
-# In[6]:
-
-
-
-
-# # Functions to print information
-
-# In[7]:
 
 
 #Use: Prints all options where the recommendation is in bullish or bearish direction
@@ -234,15 +208,7 @@ def get_top3(df):
     
 
 
-# In[8]:
-
-
-
-
-
 # # Visualization
-
-# In[9]:
 
 
 def options_visualization_vol_skew(df_atm):
@@ -275,9 +241,6 @@ def options_visualization_mispricing_scat(df):
     plt.show()
 
 
-# In[10]:
-
-
 def options_visualization_mispricing_hist(df):
     df=df.dropna()
     for stock in df.Ticker.unique():
@@ -289,8 +252,6 @@ def options_visualization_mispricing_hist(df):
     plt.legend(loc="top left")
     plt.show()
 
-
-# In[11]:
 
 
 def options_visualization_straddle_payoff(df_straddle,stock,expir):
@@ -324,26 +285,4 @@ def options_visualization_straddle_payoff(df_straddle,stock,expir):
     plt.show()
 
 
-# # Test
-
-# In[13]:
-
-if __name__ == '__main__':
-    import time
-
-    start = time.time() #Measure time
-
-    my_port=['PANW', 'GS'] #4 minutes runtime
-    df,df_atm,df_straddle=get_options_dfs(my_port)
-    df
-
-    end = time.time() #Measure time
-    print(end - start)
-    
-    get_pq_recommendation(df,'Bullish')
-    
-    options_visualization_vol_skew(df_atm)
-    options_visualization_mispricing_scat(df)
-    options_visualization_mispricing_hist(df)
-    options_visualization_straddle_payoff(df_straddle,'GOOG','2019-02-22')
 
