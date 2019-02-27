@@ -61,6 +61,10 @@ exec(open("./mainmenu.py").read())
 
    * The program will look the same in IDLE.
 
+
+## Tutorial
+[YouTube Tutorial](https://www.youtube.com/watch?v=g4JIjngaqfs&feature=youtu.be)
+
 ### Note on Options
 When using the stock analysis tool to view options data, we recommend viewing options for at most **two** stocks at a time. Compiling the options data for more than this number will consume a large amount of time.
 
