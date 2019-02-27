@@ -46,7 +46,7 @@ os.chdir(r'Path/To/Folder')
 ```
 6. Run the `mainmenu.py` script with the following code.
 ```python
-exec(open("./mainmenu.py")).read()
+exec(open("./mainmenu.py").read())
 ```
 
 7. Follow the instructions on the console to begin your analyses!
