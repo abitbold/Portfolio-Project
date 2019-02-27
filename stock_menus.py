@@ -9,6 +9,8 @@
 ##      Kurtis Lee
 ##
 ## This file contains the menus and control the floes for the stock analysis functionality
+## This file imports: Portfolio.py, yahoo.py, stock.py, options_module.py
+## This file is imported by: mainmenu.py
 
 from stock import *
 from Portfolio import *
