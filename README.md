@@ -35,8 +35,8 @@ For example, to install `pandas_datareader`, enter:
 ## How to Use
 1. Download the zip file and extract all the contents to the same folder.
 2. Navigate to the folder that contains the PokeQuant files.
-3. Launch IDLE
-4. Run the following code
+3. Launch IDLE.
+4. Run the following code.
 ```python
 import os
 ```
