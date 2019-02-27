@@ -6,15 +6,23 @@ PokeQuant is a software tool to perform financial analyses of stocks, options, a
 ## Installation
 
 * Install [Anaconda](https://www.anaconda.com/distribution/#download-section) with Python 3.7
-* Install the following packages: `pandas_datareader`,`wallstreet`, `bs4`, `urlopen`
+* Install the following packages:
+
+  * `pandas_datareader`
+
+  * `wallstreet`
+
+  * `bs4`
+
+  * `urllib`
+
 
 In your Anaconda prompt, to install `package`, type:
 
 
 >`pip install package`
 
-
-For example, install `pandas_datareader` with
+For example, to install `pandas_datareader`, enter:
 
 <p align="center">
 <img src="https://i.ibb.co/YpbyPCX/pip-install.png" alt="pip-install" border="0" height="120" width="360">
@@ -24,10 +32,9 @@ For example, install `pandas_datareader` with
 
 
 ## How to Use
-1. Download the zip file from [GitHub](https://github.com/abitbold/Portfolio-Project)
-2. Extract all the contents to the same folder.
-3. Open your Anaconda prompt and navigate to the directory of the folder that contains the PokeQuant files.
-4. Type `python mainmenu.py` to begin running the program.
+1. Download the zip file and extract all the contents to the same folder.
+2. Open your Anaconda prompt and navigate to the directory of the PokeQuant folder.
+3. Type `python mainmenu.py` to begin running the program.
 
 &nbsp;
 
@@ -48,7 +55,12 @@ For example, install `pandas_datareader` with
 &nbsp;
 
 
-### Contributors
+
+### Note on Options
+When using the stock analysis tool to view options data, we recommend viewing options for at most **two** stocks at a time. Compiling the options data for more than this number will consume a large amount of time.
+
+
+#### Contributors
 * David Abitbol - [dabitbol@andrew.cmu.edu](dabitbol@andrew.cmu.edu)
 * Arjun Alagappan - [aalagapp@andrew.cmu.edu](aalagapp@andrew.cmu.edu)
 * Cody Cao - [codyc@andrew.cmu.edu](codyc@andrew.cmu.edu)
